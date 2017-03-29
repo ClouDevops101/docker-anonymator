@@ -1,5 +1,6 @@
 # docker-anonymator
-
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Tor-logo-2011-flat.svg/612px-Tor-logo-2011-flat.svg.png)
+![](https://www.alpinelinux.org/alpinelinux-logo.svg)
 
 ```
 docker run -d -p 8118:8118 -p 9050:9050 -p 8123:8123 anonymator
