@@ -1,2 +1,2 @@
 #!/bin/sh
-polipo proxyAddress=0.0.0.0 proxyPort=8123 socksParentProxy=localhost:9050
+polipo proxyAddress=0.0.0.0 proxyPort=8123 socksParentProxy=localhost:9050  dnsUseGethostbyname=true dnsNameServer="208.67.222.222"  diskCacheRoot="/var/cache/polipo" diskCacheTruncateTime=10d diskCacheTruncateSize=4MB diskCacheUnlinkTime=30d dontCacheCookies=true dontCacheRedirects=true logLevel=0x1 

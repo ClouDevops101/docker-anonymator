@@ -1,2 +1,33 @@
+confdir /etc/service/privoxy 
+logdir /var/log/privoxy
+logfile /var/log/privoxy/privoxy.log
+# show allowed request
+debug 1
+# show connection status very verbose
+#debug 2
+# bloked request
+debug 1024
 listen-address 0.0.0.0:8118
-forward-socks5 / localhost:9050 .
+# All to polipo proxy          Privoxy (8118) -> Polipo (8123) -> TOR (9050) 
+forward / localhost:8123
+
+# But local network 
+forward           192.168.*.*/              .
+forward           10.*.*.*/                 .
+forward           127.*.*.*/                .
+forward           localhost/                .
+# But Freebox 
+forward           mafreebox.freebox.fr/     .
+forward           hd1.freebox.fr/           .
+forward           82.225.195.219/           .
+# But disk station 
+forward           diskstation.local/        .
+# But Apple,outlook, and already known adresse
+forward           .icloud.com/              .
+forward           .apple.com/               .
+forward           .outlook.com/             .
+forward           .plex.tv/             .
+
+# Filter file
+filterfile user.filter 
+actionsfile user.action
