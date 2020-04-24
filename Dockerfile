@@ -4,8 +4,11 @@ MAINTAINER Abdelilah Heddar <comment@blog.expertit.paris>
 EXPOSE 8118 9050 8123 5353 9040
 
 # Install tor and privoxy
-RUN apk --no-cache --no-progress upgrade \
-    && apk --no-cache --no-progress add bash curl privoxy shadow tini tor tzdata  runit openssl  build-base
+RUN apk --no-cache --update  --no-progress add privoxy tor runit openssl build-base
+
+# old version with 200M size
+#RUN apk --no-cache --no-progress upgrade \
+#    && apk --no-cache --no-progress add bash curl privoxy shadow tini tor tzdata  runit openssl  build-base
 
 
 RUN wget https://github.com/jech/polipo/archive/master.zip -O polipo.zip \
@@ -16,7 +19,7 @@ RUN wget https://github.com/jech/polipo/archive/master.zip -O polipo.zip \
     && cd .. \
     && rm -rf polipo.zip polipo-master \
     && mkdir -p /usr/share/polipo/www /var/cache/polipo \
-		&& apk del build-base openssl 
+    && apk del build-base openssl 
 
 #  Select the exit nodes country 
 
@@ -36,9 +39,9 @@ RUN echo 'SocksPort 0.0.0.0:9050' >>/etc/tor/torrc && \
 COPY service /etc/service/
 
 # Getting all uBlock config file into privoxy
-RUN wget https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt -O /etc/service/privoxy/user.filter \
-    &&  wget https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/privacy.txt -O ->> /etc/service/privoxy/user.filter \
-    &&  wget https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt -O ->> /etc/service/privoxy/user.filter \
-    &&  wget https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt -O ->> /etc/service/privoxy/user.filter
+# RUN wget https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt -O /etc/service/privoxy/user.filter \
+#     &&  wget https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/privacy.txt -O ->> /etc/service/privoxy/user.filter \
+#     &&  wget https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt -O ->> /etc/service/privoxy/user.filter \
+#     &&  wget https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt -O ->> /etc/service/privoxy/user.filter
 
 CMD ["runsvdir", "/etc/service"]
